@@ -1,0 +1,73 @@
+version: "3.8"
+
+services:
+  postgres:
+    container_name: postgres_dev
+    image: postgres
+    restart: always
+    environment:
+      POSTGRES_DB: ${POSTGRES_DB}
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+    ports:
+      - ${POSTGRES_EXPOSED_PORT}:${POSTGRES_PORT}
+    dns:
+      - 8.8.8.8
+      - 8.8.4.4
+    logging:
+      driver: json-file
+      options:
+        max-size: "50m"
+        max-file: "2"
+    volumes:
+      - ./volumes/db/data:/var/lib/postgresql/data
+    networks:
+      - go_simple_crud_network
+
+  adminer:
+    image: adminer
+    restart: always
+    ports:
+      - 3301:8080
+    depends_on:
+      - postgres
+    dns:
+      - 8.8.8.8
+      - 8.8.4.4
+    logging:
+      driver: json-file
+      options:
+        max-size: "50m"
+        max-file: "2"
+    networks:
+      - go_simple_crud_network
+
+  go_simple_crud:
+    image: go_simple_crud:latest
+    build:
+      context: .
+      target: production
+    environment:
+      TERM: linux
+      LANG: "C.UTF-8"
+      LOG_ROTATION_DAY: 7
+    env_file:
+      - .env.production.docker
+    ports:
+      - 8080:8080
+    depends_on:
+      - postgres
+    dns:
+      - 8.8.8.8
+      - 8.8.4.4
+    logging:
+      driver: json-file
+      options:
+        max-size: "50m"
+        max-file: "2"
+    networks:
+      - go_simple_crud_network
+
+networks:
+  go_simple_crud_network:
+    driver: bridge
