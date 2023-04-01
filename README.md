@@ -27,7 +27,7 @@ Fill the value with your own setup
 
 - Run command on `dev` stage:
 ```sh
-docker compose up -d --build -f docker-compose.dev.yml
+docker compose -f docker-compose.dev.yml up -d --build 
 ```
 After that, run blow command to start dev server:
 ```sh
