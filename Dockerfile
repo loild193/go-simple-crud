@@ -43,6 +43,9 @@ FROM builder as production
 
 WORKDIR /app
 
+# Run migrations
+RUN go run /app/migrations/migrate.go
+
 # Expose port 8080 to the outside world
 EXPOSE 8080
 

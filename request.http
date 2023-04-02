@@ -1,0 +1,26 @@
+### Create post
+POST http://localhost:8080
+Content-Type: application/json
+
+{
+  "title": "Test title 5",
+  "content": "Test content 5"
+}
+
+### Get all posts
+GET http://localhost:8080
+
+### Get post by ID
+GET http://localhost:8080/1
+
+### Update post
+PUT http://localhost:8080/1
+Content-Type: application/json
+
+{
+  "Title": "Test title 1 update 2",
+  "Content": "Test content 1 update"
+}
+
+### Delete post
+DELETE  http://localhost:8080/2

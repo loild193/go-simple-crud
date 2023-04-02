@@ -5,6 +5,7 @@
 - Gin framework
 - Air for hot reloading
 - Postgres database
+- Adminer
 
 ## Prerequisite:
 - Docker
@@ -29,7 +30,11 @@ Fill the value with your own setup
 ```sh
 docker compose -f docker-compose.dev.yml up -d --build 
 ```
-After that, run blow command to start dev server:
+After that, execute server container with:
+```sh
+docker compose exec go_simple_crud sh
+```
+& run below command to start `dev` server:
 ```sh
 air -c .air.toml
 ```
