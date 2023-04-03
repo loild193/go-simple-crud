@@ -26,6 +26,11 @@ cp .env.production.docker.example .env.production.docker
 ```
 Fill the value with your own setup
 
+- Grant permission for `docker-entrypoint.sh`:
+```sh
+chmod +x docker-entrypoint.sh
+```
+
 - Run command on `dev` stage:
 ```sh
 docker compose -f docker-compose.dev.yml up -d --build 

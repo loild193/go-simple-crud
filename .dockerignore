@@ -3,3 +3,4 @@ Dockerfile
 .env.example
 .env.production.docker.example
 .env.*
+request.http

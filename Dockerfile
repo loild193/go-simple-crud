@@ -43,11 +43,28 @@ FROM builder as production
 
 WORKDIR /app
 
-# Run migrations
-RUN go run /app/migrations/migrate.go
+ARG POSTGRES_HOST
+ARG POSTGRES_USER
+ARG POSTGRES_PASSWORD
+ARG POSTGRES_PORT
+ARG POSTGRES_DB
+
+ENV POSTGRES_HOST=$POSTGRES_HOST
+ENV POSTGRES_USER=$POSTGRES_USER
+ENV POSTGRES_PASSWORD=$POSTGRES_PASSWORD
+ENV POSTGRES_PORT=$POSTGRES_PORT
+ENV POSTGRES_DB=$POSTGRES_DB
+
+RUN addgroup -g 1001 -S golang
+RUN adduser -S golang -u 1001
+
+COPY --from=builder --chown=golang:golang /app /app
 
 # Expose port 8080 to the outside world
 EXPOSE 8080
+
+# Run migrations
+ENTRYPOINT ["/app/docker-entrypoint.sh"]
 
 # Run the executable
 CMD ["./main"]
